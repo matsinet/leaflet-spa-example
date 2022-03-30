@@ -1,4 +1,5 @@
 export default {
   header: "Map",
-  view: "Map"
+  view: "Map",
+  parks: []
 };
