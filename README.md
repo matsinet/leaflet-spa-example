@@ -8,6 +8,7 @@ Demonstrates the following:
 ## Create an environment file `.env` with the following keys
 
 MAP_KEY can be acquired here: https://www.mapbox.com/studio/account/tokens/
+
 NPS_API_KEY can be acquired here: https://www.nps.gov/subjects/developer/get-started.htm
 
 ```yaml
