@@ -33,16 +33,14 @@ function afterRender(state) {
     // Initialize the map DOM element, set the focus point and zoom level
     map = L.map('map').setView([51.505, -0.09], 13);
 
-    console.log('matsinet-process.env.MAP_KEY:', process.env.MAP_KEY);
-
     // Initialize the background (earth) layer so that markers appear to belong somewhere
-    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${process.env.MAP_KEY}`, {
+    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${process.env.MAPBOX_ACCESS_TOKEN}`, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
       id: 'mapbox/streets-v11',
       tileSize: 512,
       zoomOffset: -1,
-      accessToken: process.env.MAP_KEY
+      accessToken: process.env.MAPBOX_ACCESS_TOKEN
     }).addTo(map);
 
     // Create a group of markers so we can get their outside bounding box
@@ -52,7 +50,7 @@ function afterRender(state) {
 
     // Iterate of the parks, create a marker and add it to the marker group
     state.parks.forEach(park => {
-      console.log(`${park.name} is located at ${park.latitude}, ${park.longitude}`);
+      // console.log(`${park.name} is located at ${park.latitude}, ${park.longitude}`);
 
       const marker = L.marker([park.latitude, park.longitude])
         .bindPopup(`${park.name}<br>${park.addresses[0].city}, ${park.addresses[0].stateCode}`);
@@ -78,7 +76,13 @@ router.hooks({
     }
 
     if (view === "Map") {
-      axios.get(`https://developer.nps.gov/api/v1/parks?limit=40&api_key=${process.env.NPS_API_KEY}`)
+      // Verify the environment are being comsumed. Placed here as this is the first place that the environment is being consumed.
+      // Since it is not always possible to console log the entire `process.env` variable, we will output each attribute required below.
+      console.log('matsinet-process.env.MAPBOX_ACCESS_TOKEN:', process.env.MAPBOX_ACCESS_TOKEN);
+      console.log('matsinet-process.env.NPS_API_KEY:', process.env.NPS_API_KEY);
+
+      axios
+        .get(`https://developer.nps.gov/api/v1/parks?limit=40&api_key=${process.env.NPS_API_KEY}`)
         .then(response => {
           store.Map.parks = response.data.data;
           done();

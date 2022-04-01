@@ -12,6 +12,6 @@ MAP_KEY can be acquired here: https://www.mapbox.com/studio/account/tokens/
 NPS_API_KEY can be acquired here: https://www.nps.gov/subjects/developer/get-started.htm
 
 ```yaml
-MAP_KEY=
+MAPBOX_ACCESS_TOKEN=
 NPS_API_KEY=
 ```
