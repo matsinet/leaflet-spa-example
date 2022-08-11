@@ -34,13 +34,9 @@ function afterRender(state) {
     map = L.map('map').setView([51.505, -0.09], 13);
 
     // Initialize the background (earth) layer so that markers appear to belong somewhere
-    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${process.env.MAPBOX_ACCESS_TOKEN}`, {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox/streets-v11',
-      tileSize: 512,
-      zoomOffset: -1,
-      accessToken: process.env.MAPBOX_ACCESS_TOKEN
+    L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 18
     }).addTo(map);
 
     // Create a group of markers so we can get their outside bounding box
